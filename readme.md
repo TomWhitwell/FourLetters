@@ -2,9 +2,9 @@
 
 # Four Letters 
 
-Four letters is a tiny ambient display that shows four letter words 
+Four letters is a tiny ambient display that shows four letter words, moving to the next word by changing one letter at a time 
 
-You can see it somewhere here https://www.instagram.com/stories/highlights/17903219396647827/
+https://github.com/TomWhitwell/FourLetters/assets/1890544/2fdb9b98-34f1-4bd6-aed4-657a992e0263
 
 ## Hardware 
 * You can solder a [Pimoroni Tiny2040 2mb](https://shop.pimoroni.com/products/tiny-2040?variant=39560012300371) onto the back of a [DL2116T display](https://www.silicon-ark.co.uk/dl2416t-red-intelligent-4-digit-display-by-siemens) - (the [Litronix](https://www.silicon-ark.co.uk/optoelectronics/discounted-led-displays-from-silicon-ark-co-uk/dl2416t-red-intelligent-4-digit-display-by-litronix) version also works just as well). 
@@ -35,4 +35,8 @@ You can see it somewhere here https://www.instagram.com/stories/highlights/17903
 
   ## Extras
 
-  * There's a desktop version in the extras folder that should run in terminal on a mac 
+  * There's a desktop version in the extras folder that should run in terminal on a mac
+ 
+
+
+    
