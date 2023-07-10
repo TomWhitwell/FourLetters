@@ -1,25 +1,46 @@
 import random
 import time
+import gc
+from sys import stdout
 
 ## FUNCTIONS 
 
+class RotatingSet:
+    def __init__(self, size):
+        self.size = size
+        self.data = []
+
+    def add(self, item):
+        if item not in self.data:
+            if len(self.data) == self.size:
+                self.data.pop(0)
+            self.data.append(item)
+
+    def __contains__(self, item):
+        return item in self.data
+
+    def __len__(self):
+        return len(self.data)
+
+    def __repr__(self):
+        return repr(self.data)
+
+
+def print(*args, **kwargs):
+    pass
+    
+def print2(content):
+# 	stdout.write(content)
+# 	stdout.write("\n")
+	pass
+
 def pick_random_word(wordList):
 	selected_word = None
-
 	with open(wordList, 'r') as file:
 		for i, line in enumerate(file):
 			if random.randint(0, i) == 0:
 				selected_word = line.strip()
-
 	return selected_word
-
-
-def check_word_in_file(wordList, target_word):
-	with open(wordList, 'r') as file:
-		for line in file:
-			if line.strip() == target_word:
-				return True
-	return False
 
 def file_len(fname):
 	with open(fname) as f:
@@ -30,10 +51,6 @@ def file_len(fname):
 def replace_position(s, pos):
 	return s[:pos] + "*" + s[pos+1:]
 	
-	
-
-
-
 import board
 from digitalio import DigitalInOut, Direction
 import time
@@ -56,6 +73,8 @@ for pin_name, pin in pins.items():
 
 pins['BL'].value = True
 
+## function to refresh display 
+
 # Function to write a byte to the display:
 def write_to_display(byte, address):
 	# Set address pins
@@ -64,10 +83,7 @@ def write_to_display(byte, address):
 	# Set data pins
 	for i in range(7):
 		pins['D'][i].value = (byte >> i) & 0x01
-#		  pins['D'][i].value = random.randrange(2)
 
-
-	
 	# Toggle WR to write
 	pins['WR'].value = False
 	time.sleep(0.001)  # wait for 1ms
@@ -84,29 +100,19 @@ def display_word(random_word):
 	display_char(random_word[2],1)
 	display_char(random_word[3],0)
 
-
-
-
 ## VARIABLES 
 
 wordList = "four.txt"
-historyList = "history.txt" 
 delayTime = 2 
-words_len = file_len(wordList)
 
-with open(wordList, 'r') as f:
-	lines = f.readlines()
-word_set = set(line.strip() for line in lines)
+history_set = RotatingSet(100)
+word_set = set()
+with open(wordList, 'r') as file:
+	for line in file:
+		word_set.add(line.strip())
+words_len = len(word_set)
 
-history_set = set()
-
-## SETUP 
-
-# create an empty history file 
-# with open('historyList', 'w'):`
-#	  pass
-
-## MAIN LOOP 
+## MAIN LOOP  
 
 # pick a word to start with 
 random_word = pick_random_word(wordList).strip()
@@ -157,6 +163,7 @@ while(True):
 				break
 
 	print(random_word)
+	print2(str(len(history_set)) + " " +  str(gc.mem_free()))
 	display_word(random_word)
 	time.sleep(delayTime*2)
 	history_set.add(random_word)
